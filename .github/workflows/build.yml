@@ -51,7 +51,7 @@ jobs:
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/gdal
           docker build gdal --tag gdal
-          version=$( cat gdal/setup.cfg | grep version | cut -d "=" -f 2 | tr -d " " )
+          version=$( docker run --rm -it osgeo/gdal gdal-config --version )
           docker tag gdal $IMAGE_ID:${version}
           docker push $IMAGE_ID:${version}
           docker tag gdal $IMAGE_ID:latest
