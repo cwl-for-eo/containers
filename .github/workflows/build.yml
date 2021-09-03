@@ -1,0 +1,28 @@
+name: build
+on:
+  push:
+    branches:
+      - master
+      - main
+jobs:
+
+  container-snap-gpt:
+   
+    needs: version
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      - name: build & push snap-gpt image
+        run: |
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/snap-gpt
+          docker build snap-gpt --tag snap-gpt
+          version=$( cat snap-gpt/setup.cfg | grep version | cut -d "=" -f 2 | tr -d " " )
+          docker tag snap-gpt $IMAGE_ID:${version}
+          docker push $IMAGE_ID:${version}
+          docker tag snap-gpt $IMAGE_ID:latest
+          docker push $IMAGE_ID:${version}
+
+  
