@@ -7,8 +7,6 @@ on:
 jobs:
 
   container-snap-gpt:
-   
-    needs: version
     
     runs-on: ubuntu-latest
 
