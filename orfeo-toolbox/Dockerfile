@@ -25,16 +25,4 @@ RUN apt-get update && \
     rm -fr /srv/conda/pkgs                                                                                                  && \
     rm -fr /tmp/*
 
-# allows removing the --no-read-only CWL runner flag
-ADD snap.properties ${MAMBA_ROOT_PREFIX}/envs/env_snap/snap/etc/snap.properties
-
-RUN mv /srv/conda/envs/env_snap/snap/.snap /tmp/.snap
-
-# clean-up
-RUN rm -fr /srv/conda/envs/env_snap/snap/snap/update/backup && \
-    rm -fr /srv/conda/envs/env_snap/snap/s1tbx/update/backup && \
-    rm -fr /srv/conda/envs/env_snap/snap/s2tbx/update/backup && \
-    rm -rf /srv/conda/envs/env_snap/snap/s3tbx/update/backup && \
-    rm -fr /srv/conda/envs/env_snap/snap/rstb/update/backup 
-
 

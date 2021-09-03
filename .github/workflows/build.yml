@@ -21,6 +21,38 @@ jobs:
           docker tag snap-gpt $IMAGE_ID:${version}
           docker push $IMAGE_ID:${version}
           docker tag snap-gpt $IMAGE_ID:latest
-          docker push $IMAGE_ID:${version}
+          docker push $IMAGE_ID:latest
 
-  
+  container-orfeo-toolbox:
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      - name: build & push orfeo-toolbox image
+        run: |
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/otb
+          docker build otb --tag otb
+          version=$( cat otb/setup.cfg | grep version | cut -d "=" -f 2 | tr -d " " )
+          docker tag otb $IMAGE_ID:${version}
+          docker push $IMAGE_ID:${version}
+          docker tag otb $IMAGE_ID:latest
+          docker push $IMAGE_ID:latest  
+
+  container-gdal:
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      - name: build & push orfeo-toolbox image
+        run: |
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/gdal
+          docker build gdal --tag gdal
+          version=$( cat gdal/setup.cfg | grep version | cut -d "=" -f 2 | tr -d " " )
+          docker tag gdal $IMAGE_ID:${version}
+          docker push $IMAGE_ID:${version}
+          docker tag gdal $IMAGE_ID:latest
+          docker push $IMAGE_ID:latest  
