@@ -34,7 +34,7 @@ jobs:
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/otb
           docker build orfeo-toolbox --tag otb
-          version=$( cat otb/setup.cfg | grep version | cut -d "=" -f 2 | tr -d " " )
+          version=$( cat orfeo-toolbox/setup.cfg | grep version | cut -d "=" -f 2 | tr -d " " )
           docker tag otb $IMAGE_ID:${version}
           docker push $IMAGE_ID:${version}
           docker tag otb $IMAGE_ID:latest
