@@ -6,7 +6,7 @@ SHELL ["/bin/bash", "-c"]
 
 ENV BASH_ENV=~/.bashrc                                          \
     MAMBA_ROOT_PREFIX=/srv/conda                                \
-    PATH=/srv/conda/envs/env_snap/bin:/srv/conda/envs/env_snap/snap/bin:$PATH 
+    PATH=/srv/conda/envs/env_otb/bin:$PATH 
 
 RUN apt update && \
     apt-get install -y jq libxml2-utils
@@ -25,4 +25,11 @@ RUN apt-get update && \
     rm -fr /srv/conda/pkgs                                                                                                  && \
     rm -fr /tmp/*
 
-
+ENV CMAKE_PREFIX_PATH=/srv/conda/envs/env_otb/conda-otb \
+    PYTHONPATH=/srv/conda/envs/env_otb/conda-otb/lib/python \
+    GDAL_DATA=/srv/conda/envs/env_otb/conda-otb/share/gdal \
+    PROJ_LIB=/srv/conda/envs/env_otb/conda-otb/share/proj \
+    LC_NUMERIC=C \
+    OTB_APPLICATION_PATH=/srv/conda/envs/env_otb/conda-otb/lib/otb/applications \
+    LD_LIBRARY_PATH=/srv/conda/envs/env_otb/lib \
+    PATH=/srv/conda/envs/env_otb/conda-otb/bin:$PATH
